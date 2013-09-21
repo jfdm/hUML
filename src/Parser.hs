@@ -12,8 +12,6 @@ import Lexer
 import Model
 import Keywords
 
-
--- | Parses a Sif Spec file into the corresponding AST
 parseClassDiagram :: String -> ClassDiagram
 parseClassDiagram fname = case runParser (runLex parseCD) [] "" fname of
                             Left err -> error (show err)
@@ -154,43 +152,6 @@ parseDesc :: Parser String
 parseDesc = do reservedOp ":"
                stringLiteral
             <?> "Description"
-{-
-
--- | Pattern Definition
--- parsePattern ::= parsePatternC | parsePatternS ;
-parsePattern :: Parser ()
-parsePattern = try parsePatternC <|> parsePatternS <?> "Patterns"
-
-
--- | Complex patterns that extend or import other patterns
--- parsePatternC ::= parsePatternS { parseProperty* };
-parsePatternC :: Parser ()
-parsePatternC = do (id, modifier, name) <- parsePatternHead
-                   (extends, implements) <- braces parseProperties
-                   let p = mkComplexPattern name id modifier extends implements
-                   modifyState (p :)
-               <?> "Complex Pattern"
-
--- | Simple patterns.
--- parsePatternS ::= parsePatternHead ;
-parsePatternS :: Parser ()
-parsePatternS = do (id, modifier, name) <- parsePatternHead
-                   let p = mkSimplePattern name id modifier
-                   modifyState (p :)
-               <?> "Simple Pattern"
-
-
--- | Common Head of a Pattern
--- parsePatternHead ::= <id> '<-' parseModifier? Pattern(<name>);
-parsePatternHead :: Parser (ID, Maybe Modifier, String)
-parsePatternHead = do id <- identifier
-                      reservedOp "<-"
-                      modifier <- optionMaybe parseModifier
-                      reserved "Pattern"
-                      name <- parens stringLiteral                    
-                      return (id, modifier, name)
-                <?> "Pattern Head"
--}
 
 getClass :: String -> Classes -> Maybe Class
 getClass id [] = Nothing
