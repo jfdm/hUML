@@ -1,0 +1,106 @@
+\documentclass[pdftex]{article}
+
+\usepackage{backnaur}
+\usepackage[active, tightpage]{preview}
+
+\PreviewEnvironment{bnf}
+\begin{document}
+
+\begin{bnf}
+\bnfprod{hUML}{%
+  \bnfpn{classDecl}+
+  \bnfor
+  \bnfpn{relDecl}+
+}\\
+\bnfprod{classDecl}{%
+  \bnfpn{classType}
+  \bnfsp
+  \bnfpn{ident}
+  \bnfsp
+  \bnfpn{classBody}?
+}\\
+\bnfprod{classType}{%
+  \bnfts{`interface'}
+  \bnfor
+  (\bnfts{`abstract'}?\bnfsp\bnfts{`class'})
+}\\
+\bnfprod{classBody}{%
+  \bnfts{`\{'}
+  \bnfsp
+  (\bnfpn{attribute}+ \bnfpn{method}+)
+  \bnfsp
+  \bnfts{`\}'}
+}\\
+\bnfprod{attribute}{%
+  \bnfpn{attrModifier}?
+  \bnfsp
+  \bnfpn{visibility}?
+  \bnfsp
+  \bnfpn{ident}
+  \bnfsp
+  \bnfpn{type}
+}\\ 
+\bnfprod{method}{%
+  \bnfpn{modifer}?
+  \bnfsp
+  \bnfpn{visibility}?
+  \bnfpn{ident}
+  \bnfts{`('}
+  \bnfsp
+  \bnfpn{params}?
+  \bnfsp
+  \bnfts{`)'}
+  \bnfsp
+  \bnfpn{type}
+}\\ 
+\bnfprod{params}{%
+  \bnfpn{param}
+  \bnfsp
+  (\bnfts{`,'}\bnfsp\bnfpn{param})+
+}\\ 
+\bnfprod{param}{%
+  \bnfpn{ident}\bnfsp\bnfpn{type}
+}\\ 
+\bnfprod{relDecl}{%
+  \bnfpn{ident}
+  \bnfsp
+  \bnfpn{operator}
+  \bnfsp\bnfpn{ident}
+  \bnfpn{desc}?
+}\\
+\bnfprod{type}{%
+  \bnfts{`:'}
+  \bnfsp
+  \bnfpn{ident}
+}\\
+\bnfprod{desc}{%
+  \bnfts{`:'}
+  \bnfsp
+  \bnfpn{string}
+}\\
+\bnfprod{modifier}{%
+  \bnfts{`static'}
+  \bnfor
+  \bnfts{`abstract'}
+}\\ 
+\bnfprod{visibility}{
+  \bnfts{`--'}
+  \bnfor
+  \bnfts{`\#'}
+  \bnfor
+  \bnfts{`$\sim$'}
+  \bnfor
+  \bnfts{`+'}
+}\\ 
+\bnfprod{operator}{%
+  \bnfts{`\textless\textbar-'}
+  \bnfor
+  \bnfts{`o--'}
+  \bnfor
+  \bnfts{`$\rightarrow$'} 
+  \bnfor
+  \bnfts{`$\leftarrow$'} 
+}
+\end{bnf}
+
+\end{document}

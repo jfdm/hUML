@@ -35,9 +35,12 @@ In future I may add the ability to:
 
 + save the output to file
 + have other output formats i.e. code generation
-+ add testing
++ auto generate diagrams using graphviz
++ use alternate haskell based drawing tool
 + add cabal support
-+ 
++ add quickcheck testing
++ add better? documentation.
+
 ### What is PlantUML?
 
 PlantUML is a Java program that provides a textual notation and tooling for UML Modelling.

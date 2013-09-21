@@ -1,0 +1,35 @@
+// I am a Comment.
+
+class A {
+  + name : String
+}
+
+class B {
+  + name : String
+  + m(s : String) : void
+}
+
+class C {
+  # name : String
+  ~ n : int
+  - d : Double
+  + c : long
+}
+
+class D
+
+class E
+class F
+
+class G
+class H
+
+class I
+class K
+
+A --> B : "association"
+C <|- D : "specialisation"
+E *-- F : "composition"
+G o-- H : "aggregation" 
+I <-- K : "realisation" 
+
