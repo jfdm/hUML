@@ -1,20 +1,22 @@
-module Transform.Dot
-    (
-     toDotClassDiagram
-    ) where
+-- | Convert our Class Diagram to a Dot representation
+module ClassDiagram.Transform.Dot (
+  toDotClassDiagram
+) where
 
 import Text.PrettyPrint.Leijen as PP
 import Data.Maybe
-import Model
-import Keywords
 
+import ClassDiagram.Model
+import ClassDiagram.Keywords
+
+-- | Do the transformation.
 toDotClassDiagram :: ClassDiagram -> Doc
 toDotClassDiagram cd = heed <$$> cs <$$> rs <$$> foot
     where
       heed = text "digraph G{"
       foot = text "}"
-      cs = prettyClasses (classes cd)
-      rs = prettyRelations (relations cd)
+      cs = indent 4 $ prettyClasses (classes cd)
+      rs = indent 4 $ prettyRelations (relations cd)
 
 -- ----------------------------------------------------------------- [ Classes ]
 prettyClasses :: Classes -> Doc
@@ -38,6 +40,7 @@ genRecordStyle c = braces (hcat (punctuate (text "|") body))
                      as = prettyAttrs (attrs c)
                      ms = prettyMeths (methods c)
 
+-- ----------------------------------------------------------------- [ Methods ]
 prettyMeths :: Maybe Methods -> Doc
 prettyMeths Nothing = empty
 prettyMeths (Just ms) = vcat $ map prettyMeth ms
@@ -50,6 +53,7 @@ prettyMeth m = prettyMod (methMod m) <>
                colon <+>
                text (rType m)
 
+-- ------------------------------------------------------------------ [ Params ]
 prettyParams :: Maybe Params -> Doc
 prettyParams Nothing = lparen <> rparen
 prettyParams (Just ps) = parens (hcat (punctuate comma prettyp))
@@ -59,6 +63,7 @@ prettyParams (Just ps) = parens (hcat (punctuate comma prettyp))
 prettyParam :: Param -> Doc
 prettyParam p = text (parID p) <+> colon <+> text (typ p)
 
+-- -------------------------------------------------------------- [ Attributes ]
 prettyAttrs :: Maybe Attributes -> Doc
 prettyAttrs Nothing = empty
 prettyAttrs (Just as) = vcat $ map prettyAttr as
@@ -70,6 +75,7 @@ prettyAttr a = prettyMod (attrMod a) <>
                colon <+>
                text (attrType a)
 
+-- -------------------------------------------------------------- [ Visibility ]
 prettyVis :: Visibility -> Doc
 prettyVis v = case v of 
                 Private   -> text hUmlVisibilityPrivate
@@ -77,12 +83,14 @@ prettyVis v = case v of
                 Package   -> text hUmlVisibilityPackage
                 Public    -> text hUmlVisibilityPublic
 
+-- ------------------------------------------------------------- [ Class Types ]
 prettyCType :: TyClass -> Doc
 prettyCType ctype = case ctype of
                       AbstractClass  -> parens $ text "A"
                       NormalClass    -> parens $ text "C"
                       InterfaceClass -> parens $ text "I"
 
+-- --------------------------------------------------------------- [ Modifiers ]
 prettyMod :: Maybe Modifier -> Doc
 prettyMod Nothing = empty
 prettyMod (Just m) = case m of
@@ -119,7 +127,6 @@ genEdgeStyle t = case t of
                    Composition    -> ("solid", "back", "arrowtail", "diamond")
                    Realisation    -> ("dashed", "back", "arrowtail", "empty")
                    Association    -> ("solid", "forward", "arrowhead", "normal")
-
 
 -- ------------------------------------------------------------------- [ Utils ]
 genStyle :: [Doc] -> Doc
