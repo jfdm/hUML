@@ -30,7 +30,7 @@ prettyClass c = text (classID c) <+>
 genClassStyle :: Class -> Doc
 genClassStyle c = genStyle [genStylePair "shape" "record", body]
                   where
-                    body = (text "label") <> equals <> dquotes (genRecordStyle c)
+                    body = text "label" <> equals <> dquotes (genRecordStyle c)
 
 genRecordStyle :: Class -> Doc
 genRecordStyle c = braces (hcat (punctuate (text "|") body))
@@ -58,7 +58,7 @@ prettyParams :: Maybe Params -> Doc
 prettyParams Nothing = lparen <> rparen
 prettyParams (Just ps) = parens (hcat (punctuate comma prettyp))
                          where
-                           prettyp = map (prettyParam) ps
+                           prettyp = map prettyParam ps
 
 prettyParam :: Param -> Doc
 prettyParam p = text (parID p) <+> colon <+> text (typ p)
@@ -115,9 +115,7 @@ getEdgeStyle rtype desc = genStyle styling
                 genStylePair "dir" dir,
                 genStylePair arrow astyle,
                 label]
-      label = if isNothing desc
-              then empty
-              else genStylePair "label" (fromJust desc)
+      label = maybe empty (genStylePair "label") desc
       (lstyle, dir, arrow, astyle) = genEdgeStyle rtype
 
 genEdgeStyle :: TyRelation -> (String, String, String, String)

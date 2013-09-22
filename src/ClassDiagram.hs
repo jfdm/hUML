@@ -1,12 +1,7 @@
 -- | How to deal with Class Diagrams within the program.
-module ClassDiagram (
-  module ClassDiagram.Keywords,
-  module ClassDiagram.Model,
-  module ClassDiagram.Parser,
-  module ClassDiagram.Transform.Dot,
-) where
+module ClassDiagram (module X) where
 
-import ClassDiagram.Keywords
-import ClassDiagram.Model
-import ClassDiagram.Parser
-import ClassDiagram.Transform.Dot
+import ClassDiagram.Keywords       as X 
+import ClassDiagram.Model          as X 
+import ClassDiagram.Parser         as X 
+import ClassDiagram.Transform.Dot  as X 

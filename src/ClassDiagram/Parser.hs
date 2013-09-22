@@ -40,9 +40,7 @@ parseCD = do cs <- many1 parseClass
 --     parseClass ::= parseClassC | parseClassS ;
 -- @
 parseClass :: Parser Class
-parseClass = do try parseClassC
-             <|> parseClassS
-             <?> "Class"
+parseClass = try parseClassC <|> parseClassS <?> "Class"
 
 -- | A class with no body
 -- @
@@ -240,6 +238,6 @@ parseVisibility = do try $ reservedOp hUmlVisibilityPrivate
 
 getClass :: String -> Classes -> Maybe Class
 getClass id [] = Nothing
-getClass id cs = find (\x -> (classID x) == id) cs
+getClass id cs = find (\x -> classID x == id) cs
 
 -- --------------------------------------------------------------------- [ EOF ]
