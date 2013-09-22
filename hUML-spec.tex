@@ -79,9 +79,9 @@
   \bnfpn{string}
 }\\
 \bnfprod{modifier}{%
-  \bnfts{`static'}
-  \bnfor
-  \bnfts{`abstract'}
+  \bnfts{`\{'}
+  (\bnfts{`static'}\bnfor\bnfts{`abstract'})
+  \bnfts{`\}'}
 }\\ 
 \bnfprod{visibility}{
   \bnfts{`--'}
