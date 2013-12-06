@@ -1,0 +1,6 @@
+// A msg diagram
+
+
+a -> b : "syn"
+b -> a : "syn", "ack"
+a -> b : "fin"

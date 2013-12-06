@@ -1,6 +1,6 @@
 -- | Convert our Class Diagram to a Dot representation
 module ClassDiagram.Transform.Dot (
-  toDotClassDiagram
+  classDiagram2Dot, classDiaFmtDot, classDiaExtDot
 ) where
 
 import Text.PrettyPrint.Leijen as PP
@@ -9,9 +9,12 @@ import Data.Maybe
 import ClassDiagram.Model
 import ClassDiagram.Keywords
 
+classDiaFmtDot = "dot"
+classDiaExtDot = ".dot"
+
 -- | Do the transformation.
-toDotClassDiagram :: ClassDiagram -> Doc
-toDotClassDiagram cd = heed <$$> cs <$$> rs <$$> foot
+classDiagram2Dot :: ClassDiagram -> Doc
+classDiagram2Dot cd = heed <$$> cs <$$> rs <$$> foot
     where
       heed = text "digraph G{"
       foot = text "}"

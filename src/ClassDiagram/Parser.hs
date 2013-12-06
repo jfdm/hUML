@@ -19,10 +19,8 @@ import ClassDiagram.Model
 import ClassDiagram.Keywords
 
 -- | Wrapper function.
-parseClassDiagram :: String -> ClassDiagram
-parseClassDiagram fname = case runParser (runLex parseCD) [] "" fname of
-                            Left err -> error (show err)
-                            Right ast -> ast
+parseClassDiagram :: String -> Either ParseError ClassDiagram
+parseClassDiagram input = runParser (runLex parseCD) [] "" input
 
 -- | Do the parsing
 -- @
@@ -32,7 +30,7 @@ parseCD :: Parser ClassDiagram
 parseCD = do cs <- many1 parseClass
              rs <- many1 parseRelation
              return $ ClassDiagram cs rs
-          <?> "Class Diagram"
+         <?> "Class Diagram"
 
 -- ----------------------------------------------------------------- [ Classes ]
 -- | A Class.

@@ -1,0 +1,30 @@
+\documentclass[pdftex]{article}
+
+\usepackage{backnaur}
+\usepackage[active, tightpage]{preview}
+
+\PreviewEnvironment{bnf}
+\begin{document}
+
+\begin{bnf}
+\bnfprod{hUML-MSD}{%
+  (\bnfpn{send}
+  \bnfsp
+  \bnfts{`:'}
+  \bnfsp
+  \bnfpn{msgs})+
+}\\
+\bnfprod{send}{%
+  \bnfpn{ident}
+  \bnfts{`$\rightarrow$'}
+  \bnfpn{ident}
+}\\
+\bnfprod{msgs}{%
+  \bnfpn{msg} (\bnfts{`,'} \bnfpn{msg})+
+}\\
+\bnfprod{msg}{%
+  \bnfpn{string}
+}
+\end{bnf}
+
+\end{document}
