@@ -4,12 +4,12 @@ module Main (main) where
 
 import System.Console.CmdArgs
 import System.Environment (getArgs, withArgs)
-import System.IO
-import System.FilePath
 import System.Exit
+import System.FilePath
+import System.IO
 
-import Text.Show.Pretty
 import Text.PrettyPrint.Leijen as PP
+import Text.Show.Pretty
 
 import Text.Parsec.Error
 
@@ -19,8 +19,7 @@ import qualified MsgDiagram as MD
 -- | Do stuff
 main :: IO ()
 main = do
-  args <- getArgs
-  opts <- (if null args
+  opts <- (if null getArgs
            then withArgs ["--help"]
            else id) $ cmdArgs hUMLOptions
  
@@ -49,7 +48,7 @@ doStuff opts parse transform = do
            let fname = addExtension (file opts) ".model"
            writeFile fname (ppShow res)
            putStrLn $ "Model for: "
-                      ++ (file opts)
+                      ++ file opts
                       ++ " has been written in "
                       ++ fname
          else putStrLn ""

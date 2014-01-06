@@ -10,7 +10,7 @@ Feature-wise PlantUML offers more than hUML; through using PlantUML one can crea
 Currently hUML has support for:
 
 1. Specifiying Class Diagrams.
-2. Outputing Dot version of the input to STDOUT.
+2. Outputing Dot and UML versions of the input to STDOUT.
 
 ### The Input Language
 
@@ -36,8 +36,7 @@ In future I may add the ability to:
 + save the output to file
 + have other output formats i.e. code generation
 + auto generate diagrams using graphviz
-+ use alternate haskell based drawing tool
-+ add cabal support
++ use an alternate haskell based drawing tool
 + add quickcheck testing
 + add better? documentation.
 
